@@ -1,0 +1,42 @@
+plugins {
+    id 'com.star-zero.gradle.githook' version '1.2.1'
+    id 'ru.netris.commitlint' version '1.4.1'
+    id 'application'
+	id 'java'
+}
+
+mainClassName = 'app.Application'
+sourceCompatibility = '11'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+
+githook {
+    failOnMissingHooksDir = false
+    hooks {
+        'commit-msg' {
+            task = 'commitlint'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'app.Application'
+        )
+    }
+}
